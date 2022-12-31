@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block content %}
+<header>
+      <center>
+      <div class="navbar-search">
+        <form action="" name="searched">
+
+          <input type="search" placeholder="Search">
+
+
+        </form><br>
+      </div>
+      </center>
+</header>
+<style>
+.navbar-search input {
+  width: 710px;
+  background-color: #fafafa;
+  height: 35px;
+  border: none;
+  border-bottom: 2px solid #5f788a;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+.navbar-search input:focus {
+  background-color: #ededed;
+}
+
+.navbar-search input:hover {
+  background-color: #ededed;
+}
+</style>
+    <center>
+    {% if current_user.is_authenticated %}
+
+    <h1>Welcome, <b>{{current_user.first_name}}</b></h1>
+    {% endif %}
+    <div class="content">
+    {% if posts %}
+    {% for post in posts %}
+
+        {% if post.type == 'vid' %}
+
+        <div class="card" style="align:center;">
+          <center>
+          <video src="{{ url_for('static', filename=post.content) }}" controls></video>
+            <div class="container">
+              <h4><b>{{ post.author }}</b></h4>
+              <p>{{ post.title }}</p>
+            </div>
+          </center>
+        </div>
+
+        {% else %}
+        <div class="card" style="padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0; align:center;">
+
+          {% if post.media %}
+
+          <div class="container" style="padding:0px; text-align: center; margin:0px">
+              <a href="{{ url_for('get_post', post_id=post.id) }}" style="text-decoration:none;">
+              <div class="author-box" style="padding-left:0px;">
+
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <h4><b>{{ post.author.username }}</b></h4>
+              </div>
+              <div class="content-box">
+              <img style="padding: 0px; margin: 0px" src="{{ url_for('static', filename='user_uploads/' + post.media) }}">
+              </div></a>
+
+              <p style="margin: 10px; text-align: center; white-space: pre-wrap;">{{ post.content }}</p>
+
+          </div>
+          {% else %}
+          <div class="container" style="padding:0px; text-align: center;">
+            <a href="{{ url_for('get_post', post_id=post.id) }}" style="text-decoration:none;">
+            <div class="author-box" style="padding-left:0px;">
+              <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+              <h4><b>{{ post.author.username }}</b></h4>
+            </div></a>
+
+          <p style="margin:10px; white-space: pre-wrap;">{{ post.content }}</p>
+
+          </div>
+          {% endif %}
+
+        </div>
+        {% endif %}
+
+    {% endfor %}
+    {% else %}
+    <div><a>No posts Yet</a></div>
+    {% endif %}
+    </div>
+    <script>
+      // Get all video elements on the page
+      var videos = document.querySelectorAll("video");
+      // Loop through the videos and add an event listener to each one
+      videos.forEach(function(video) {
+        video.addEventListener("play", function() {
+          // When this video starts playing, pause all other videos
+          videos.forEach(function(otherVideo) {
+            if (otherVideo !== video) {
+              otherVideo.pause();
+            }
+          });
+        });
+      });
+    </script>
+    </center>
+{% endblock content %}
+

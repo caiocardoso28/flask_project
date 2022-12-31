@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<center>
+{% if post.type == 'vid' %}
+
+        <div class="card" style="align:center;">
+          <center>
+          <video src="{{ url_for('static', filename=post.content) }}" controls></video>
+            <div class="container">
+              <h4><b>{{ post.author }}</b></h4>
+              <p>{{ post.title }}</p>
+            </div>
+          </center>
+        </div>
+
+        {% else %}
+        <div class="card" style="padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0; align:center;">
+
+          {% if post.media %}
+          <div class="container" style="padding:0px; text-align: center;">
+              <div class="author-box" style="padding-left:0px;">
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
+              </div>
+              <img src="{{ url_for('static', filename='user_uploads/' + post.media) }}">
+              <p style="margin:10px; text-align: center;">{{ post.author.username }} - {{ post.content }}</p>
+              <p style="margin:10px; text-align: center;">Liked by {{ post.liked.count(post.liked) }} others</p>
+          </div>
+          {% else %}
+          <div class="container" style="padding:0px; text-align: center;">
+            <div class="author-box" style="padding-left:0px;">
+              <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+              <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
+            </div>
+          <p style="margin:10px">{{ post.content }}</p>
+          <p style="margin:10px; text-align: center;">Liked by {{ post.liked.count(post.liked) }} others</p>
+          </div>
+          {% endif %}
+
+        </div>
+{% endif %}
+</center>
+{% endblock content %}

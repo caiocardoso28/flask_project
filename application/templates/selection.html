@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block header %}
+<header style="vertical-align:middle"><center><h1>Pick how you want to use Jetti.</h1></center></header><br>
+{% endblock %}
+{% block content %}
+<style>
+.button {
+  border-radius: 4px;
+  background-color: #a2b0b8;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+<center>
+<div style="width: 33.33%; float: left;">
+        <div class="card" style="width: 350px; height: 50%; margin: 10px;">
+          <center>
+          <img src="{{ url_for('static', filename='investor.png') }}" style="width:300px; height:300px">
+            <div class="container">
+              <h4 style="margin:5px"><b>Investor</b></h4>
+              <a href="/register/Investor" style="color:#ffffff; text-decoration:none"><button class="button"><span>Select</span></button></a>
+            </div>
+          </center>
+        </div>
+</div>
+<div style="width: 33.33%; float: left;">
+      <div class="card" style="width: 350px; height: 50%; margin: 10px;">
+          <center>
+          <img src="{{ url_for('static', filename='teamwork.png') }}" style="width:300px; height:300px">
+            <div class="container">
+              <h4 style="margin:5px"><b>Organization</b></h4>
+              <a href="/register/Organization" style="color:#ffffff; text-decoration:none"><button class="button"><span>Select</span></button></a>
+            </div>
+          </center>
+      </div>
+</div>
+
+<div style="width: 33.33%; float: left;">
+      <div class="card" style="width: 350px; height: 50%; margin: 10px;">
+          <center>
+          <img src="{{ url_for('static', filename='pioneer.png') }}" style="width:300px; height:300px">
+            <div class="container">
+              <h4 style="margin:5px"><b>Pioneer</b></h4>
+              <a href="/register/Pioneer" style="color:#ffffff; text-decoration:none"><button class="button"><span>Select</span></button></a>
+            </div>
+          </center>
+      </div>
+</div>
+
+<div>
+        <small class="text-muted">
+            Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+        </small>
+</div>
+</center>
+{% endblock content %}

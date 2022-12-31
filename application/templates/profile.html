@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block content %}
+<header>
+      <center>
+      <div class="navbar-search">
+        <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" style="width:100px; height:100px; margin:6px">
+        <h2>{{ user.username }}</h2>
+        <p>Followers: {{ len(user.followers) }} | Following: {{ len(user.follows) }} | Total Posts: {{ len(user.posts) }}</p>
+        <form action="" method="post">
+
+          <input type="text" placeholder="Search {{ user.username }}'s posts">
+
+
+        </form><br>
+
+      </div>
+      </center>
+</header>
+<style>
+.navbar-search input {
+  width: 710px;
+  background-color: #fafafa;
+  height: 35px;
+  border: none;
+  border-bottom: 2px solid #5f788a;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+.navbar-search input:focus {
+  background-color: #ededed;
+}
+
+.navbar-search input:hover {
+  background-color: #ededed;
+}
+</style>
+    <center>
+    {% if current_user.is_authenticated and current_user == user %}
+    <h1>display editable options</h1>
+    {% endif %}
+    <div class="content">
+    {% if user.posts %}
+    {% for post in user.posts %}
+
+        {% if post.type == 'vid' %}
+
+        <div class="card" style="align:center;">
+          <center>
+          <video src="{{ url_for('static', filename=post.content) }}" controls></video>
+            <div class="container">
+              <h4><b>{{ post.author }}</b></h4>
+              <p>{{ post.title }}</p>
+            </div>
+          </center>
+        </div>
+
+        {% else %}
+        <div class="card" style="padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0; align:center;">
+
+          {% if post.media %}
+
+          <div class="container" style="padding:0px; text-align: center;">
+              <a href="{{ url_for('get_post', post_id=post.id) }}" style="text-decoration:none;">
+              <div class="author-box" style="padding-left:0px;">
+
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <h4><b>{{ post.author.username }}</b></h4>
+              </div>
+              <div class="content-box">
+              <img src="{{ url_for('static', filename='user_uploads/' + post.media) }}">
+              </div></a>
+              <p style="margin:10px; text-align: center;">{{ post.content }}</p>
+          </div>
+          {% else %}
+          <div class="container" style="padding:0px; text-align: center;">
+            <a href="{{ url_for('get_post', post_id=post.id) }}" style="text-decoration:none;">
+            <div class="author-box" style="padding-left:0px;">
+              <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+              <h4><b>{{ post.author.username }}</b></h4>
+            </div></a>
+          <p style="margin:10px">{{ post.content }}</p>
+          </div>
+          {% endif %}
+
+        </div>
+        {% endif %}
+
+    {% endfor %}
+    {% else %}
+    <div><a>No posts Yet</a></div>
+    {% endif %}
+    </div>
+    <script>
+      // Get all video elements on the page
+      var videos = document.querySelectorAll("video");
+      // Loop through the videos and add an event listener to each one
+      videos.forEach(function(video) {
+        video.addEventListener("play", function() {
+          // When this video starts playing, pause all other videos
+          videos.forEach(function(otherVideo) {
+            if (otherVideo !== video) {
+              otherVideo.pause();
+            }
+          });
+        });
+      });
+    </script>
+    </center>
+{% endblock content %}
+
