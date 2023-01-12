@@ -84,7 +84,6 @@ def save_picture(form_picture, typ=None):
     height = int((float(i.size[1]) * ratio))
     i = i.resize((bwidth, height), Image.ANTIALIAS)
     i.save(picture_path)
-
     return picture_fn
 
 
@@ -168,11 +167,11 @@ def profile(user_id):
     return render_template("profile.html", title=f"{user.username} - Profile", user=user, len=len)
 
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@app.route("/post/<int:post_id>/delete", methods=['POST', 'GET'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    if post.author.id != current_user.id:
         abort(403)
     db.session.delete(post)
     db.session.commit()
