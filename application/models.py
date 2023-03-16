@@ -2,7 +2,7 @@ from application import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 import random
-import timeago
+
 
 
 @login_manager.user_loader
@@ -182,7 +182,7 @@ class Post(db.Model):
 
     def get_timeago(self):
         now = datetime.now()
-        return timeago.format(self.date_posted, now)
+        return None
 
     def __repr__(self):
         return f"Post('{self.content}', '{self.date_posted}')"

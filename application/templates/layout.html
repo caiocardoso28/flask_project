@@ -14,17 +14,17 @@
     {% if title %}
         <title>{{ title }}</title>
     {% else %}
-        <title>JETTI</title>
+        <title>Spinna</title>
     {% endif %}
 </head>
 <style>
 .navbar {
-  background: #5f788a;
+  background: #3c4a3b;
   transition: .75s;
   transition-timing-function: ease-out;
   }
 .navbar:hover {
-  background: #13547a;
+  background: #4a5e49;
 }
 
 
@@ -35,22 +35,18 @@
 
 .bg-custom-2 {
 background: linear-gradient(
-     15deg, #13547a 0%, #5f788a 100%
+     15deg, #000000 0%, #5f788a 100%
     );
 }
 
-.bg-custom-3 {
-background: linear-gradient(
-     15deg, #13547a 0%, #5f788a 100%
-    );
-}
+
 </style>
 <body>
     {% block header %}
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="font-size: 15px">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">JETTI</a>
+          <a class="navbar-brand mr-4" href="/">RePlay</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
