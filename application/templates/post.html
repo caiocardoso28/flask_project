@@ -19,11 +19,19 @@
           {% if post.media %}
           <div class="container" style="padding:0px; text-align: center;">
               <div class="author-box" style="padding-left:0px;">
-                {% if current_user.username == post.author.username %}
+              {% if current_user.username == post.author.username %}
                   <a href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
-                {% endif %}
                   <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
                   <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
+              {% else %}
+                  {% if post.author not in current_user.follows %}
+                  <a href="{{ url_for('follow_user', user_id=post.author.id) }}">+Follow</a>
+                  {% else %}
+                  <a href="{{ url_for('index', user_id=post.author.id) }}">Following</a>
+                  {% endif %}
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
+              {% endif %}
               </div>
               <img src="{{ url_for('static', filename='user_uploads/' + post.media) }}">
               <p style="margin:10px; text-align: center;">{{ post.author.username }} - {{ post.content }}</p>
@@ -34,9 +42,17 @@
             <div class="author-box" style="padding-left:0px;">
               {% if current_user.username == post.author.username %}
                   <a href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
+              {% else %}
+                  {% if post.author not in current_user.follows %}
+                  <a href="{{ url_for('follow_user', user_id=post.author.id) }}">+Follow</a>
+                  {% else %}
+                  <a href="{{ url_for('index', user_id=post.author.id) }}">Following</a>
+                  {% endif %}
+                  <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
+                  <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
               {% endif %}
-              <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" style="width:30px; height:30px; margin:6px">
-              <a href="{{ url_for('profile', user_id=post.author.id) }}"><h4><b>{{ post.author.username }}</b></h4></a>
             </div>
           <p style="margin:10px">{{ post.content }}</p>
           <p style="margin:10px; text-align: center;">Liked by {{ post.liked.count(post.liked) }} others</p>

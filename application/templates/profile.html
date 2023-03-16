@@ -5,7 +5,14 @@
       <div class="navbar-search">
         <img class="img-responsive rounded-circle" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" style="width:100px; height:100px; margin:6px">
         <h2>{{ user.username }}</h2>
+        {% if user in current_user.follows %}
+            <p>Following</p>
+        {% endif %}
         <p>Followers: {{ len(user.followers) }} | Following: {{ len(user.follows) }} | Total Posts: {{ len(user.posts) }}</p>
+        {% if len(user.follows) > 0 %}
+
+        <p>Recently Followed: <a href="{{ url_for('profile', user_id=user.follows[-1].id) }}">{{ user.follows[-1].username }}</a></p>
+        {% endif %}
         <form action="" method="post">
 
           <input type="text" placeholder="Search {{ user.username }}'s posts">

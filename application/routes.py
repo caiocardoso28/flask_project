@@ -191,4 +191,14 @@ def test():
     return render_template("test.html")
 
 
+@app.route("/follow/<user_id>", methods=['GET', 'POST'])
+@login_required
+def follow_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    current_user.follow(user)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
+
 
